@@ -14,7 +14,17 @@ class BubbleSelector extends React.Component {
 
     submit = (levelChange) => {
         if (levelChange === +1 && this.hasTriad(this.state.clicked)) { return; }
+        if (levelChange === +1 && this.getClikedCount() === 0) {
+            this.props.noBubblesSelected();
+            return;
+        }
         this.props.submit(this.state, levelChange)
+    }
+
+    getClikedCount() {
+        return this.state.clicked.map((rowValue, rowIndex) => {
+            return rowValue.filter((colValue) => colValue === true).length
+        }).reduce((a, b) => a + b, 0);
     }
 
     size() { return this.props.currentLevel + 1; }
@@ -200,7 +210,8 @@ class BubbleSelector extends React.Component {
                     >
                         Next (N)
                     </button><br />
-                    <span>h = {this.props.currentLevel}</span>
+                    <span>h = {this.props.currentLevel},
+                    N = {this.props.clickedTotal + this.getClikedCount()}</span>
                 </div>
             </div>
         )

@@ -25,15 +25,17 @@ class App extends React.Component {
     toast("Level has a " + t, { toastId: t, });
   }
 
-  submit({ clicked }, levelChange) {
-    const clickedCount = clicked.map((rowValue, rowIndex) => {
-      return rowValue.filter((colValue) => colValue === true).length
+  getNumClicked() {
+    const levels = this.state.levels;
+    const numClicked = levels.slice(0, this.state.currentLevel).map((levelValue, levelRow) => {
+      return levelValue.map((rowValue, rowIndex) => {
+        return rowValue.filter((colValue) => colValue === true).length
+      }).reduce((a, b) => a + b, 0);
     }).reduce((a, b) => a + b, 0);
-    if (levelChange === +1 && clickedCount === 0) {
-      this.noBubblesSelected();
-      return;
-    }
+    return numClicked;
+  }
 
+  submit({ clicked }, levelChange) {
     function newLevel(oldLevel) {
       return levelChange === -1 ? Math.max(oldLevel - 1, 0) : oldLevel + 1
     }
@@ -68,6 +70,8 @@ class App extends React.Component {
           clicked={this.state.levels[this.state.currentLevel]}
           prevClicked={this.state.levels[this.state.currentLevel - 1]}
           triadNotification={this.prohibitedTriad}
+          clickedTotal={this.getNumClicked()}
+          noBubblesSelected={this.noBubblesSelected}
         />
         <ToastContainer />
       </div>
