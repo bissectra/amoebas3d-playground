@@ -1,0 +1,17 @@
+.bubble {
+    display: inline-block;
+    background-color: yellow;
+    margin: 2px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
+
+.bubble:hover {
+    background-color: yellowgreen;
+    cursor: pointer;
+}
+
+.clicked {
+    background-color: violet;
+}
