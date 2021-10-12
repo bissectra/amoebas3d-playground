@@ -1,5 +1,7 @@
 import './App.css';
 import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import BubbleSelector from './components/BubbleSelector';
 
 class App extends React.Component {
@@ -15,7 +17,23 @@ class App extends React.Component {
     document.title = "Amoebas 3d"
   }
 
+  noBubblesSelected() {
+    toast("No bubbles selected!", { toastId: 0, });
+  }
+
+  prohibitedTriad(t) {
+    toast("Level has a " + t, { toastId: t, });
+  }
+
   submit({ clicked }, levelChange) {
+    const clickedCount = clicked.map((rowValue, rowIndex) => {
+      return rowValue.filter((colValue) => colValue === true).length
+    }).reduce((a, b) => a + b, 0);
+    if (levelChange === +1 && clickedCount === 0) {
+      this.noBubblesSelected();
+      return;
+    }
+
     function newLevel(oldLevel) {
       return levelChange === -1 ? Math.max(oldLevel - 1, 0) : oldLevel + 1
     }
@@ -36,7 +54,9 @@ class App extends React.Component {
           currentLevel: newLevel(state.currentLevel),
         }
       }
-    }, () => console.log(this.state))
+    }, () => {
+      toast.dismiss();
+    })
   }
 
   render() {
@@ -44,10 +64,12 @@ class App extends React.Component {
       <div className="App">
         <BubbleSelector
           currentLevel={this.state.currentLevel}
-          size={this.state.currentLevel + 1}
           submit={(state, levelChange) => this.submit(state, levelChange)}
           clicked={this.state.levels[this.state.currentLevel]}
+          prevClicked={this.state.levels[this.state.currentLevel - 1]}
+          triadNotification={this.prohibitedTriad}
         />
+        <ToastContainer />
       </div>
     );
   }
