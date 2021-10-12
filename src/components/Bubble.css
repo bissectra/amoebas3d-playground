@@ -1,17 +1,22 @@
+:root{
+    --ball-color: black;
+    --ball-color-light: gray;
+}
+
 .bubble {
     display: inline-block;
-    background-color: yellow;
-    margin: 2px;
+    border: 1px solid;
+    border-color: var(--ball-color);
     border-radius: 50%;
     width: 25px;
     height: 25px;
 }
 
 .bubble:hover {
-    background-color: yellowgreen;
+    background-color: var(--ball-color-light);
     cursor: pointer;
 }
 
 .clicked {
-    background-color: violet;
+    background-color: var(--ball-color);
 }

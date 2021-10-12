@@ -1,13 +1,55 @@
 .row {
     display: flex;
     width: min-content;
+    margin: -1.8px 0;
+}
+
+#select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min-content;
+    margin: 0 auto;
+    background-color: white;
 }
 
 .box {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: min-content;
-    margin: 10px auto 0 auto;
-    border: 1px solid;
+    margin: auto;
+}
+
+.controls {
+    /* display: flex; */
+    order: -1;
+    left: 0;
+    margin: 20px;
+    position: fixed;
+}
+
+.controls>button {
+    padding: 10px;
+    font-size: large;
+    border: none;
+    margin: 0;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+    position: relative;
+}
+
+button:hover {
+    background-color: gainsboro;
+}
+
+span {
+    font-size: 36px;
+    /* position: fixed; */
+    margin: 0;
 }
